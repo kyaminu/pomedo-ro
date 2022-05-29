@@ -14,3 +14,38 @@ a {
 .icon-name {
     font-size: 1px;
 }
+
+.add_timer_button {
+    border: #eee;
+    background: #eee;
+    border-radius: 50px;
+    position: relative;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 260px;
+    padding: 10px 25px;
+    color: #a18686;
+    transition: 0.3s ease-in-out;
+    font-weight: 500;
+}
+
+.add_timer_button:hover {
+    background: #d2a6a6;
+    color: #FFF;
+}
+.add_timer_button:after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-top: 3px solid #d2a6a6;
+    border-right: 3px solid #d2a6a6;
+    transform: rotate(45deg) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    border-radius: 1px;
+    transition: 0.3s ease-in-out;
+}
+.add_timer_button:hover:after {
+    border-color: #FFF;
+}
