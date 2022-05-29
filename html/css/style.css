@@ -3,12 +3,12 @@ body {
     height: 550px;
 }
 
-.nav {
-    background-color: cadetblue;
+a {
+    text-decoration:none;
 }
 
-.li-p {
-    font-size: 1pt;
+.navi {
+    background-color: cadetblue;
 }
 
 .icon-name {
