@@ -1,0 +1,16 @@
+body {
+    width: 400px;
+    height: 550px;
+}
+
+.nav {
+    background-color: cadetblue;
+}
+
+.li-p {
+    font-size: 1pt;
+}
+
+.icon-name {
+    font-size: 1px;
+}
