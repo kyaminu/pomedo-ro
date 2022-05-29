@@ -1,0 +1,16 @@
+body {
+    width: 400px;
+    height: 550px;
+}
+
+a {
+    text-decoration:none;
+}
+
+.navi {
+    background-color: cadetblue;
+}
+
+.icon-name {
+    font-size: 1px;
+}
