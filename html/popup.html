@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel ="stylesheet" href="./css/all.min.css">
+        <script src="js/bootstrap.js"></script>
     </head>
     <body>
         <!-- ナビゲーションバー -->
@@ -25,9 +26,28 @@
             </div>
         </div>
         <!-- ナビゲーションバー -->
-        <button class="add_timer_button d-flex my-2">
+        <button class="add_timer_button d-flex my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <div><i class="fa-solid fa-plus"></i></div>
             <div>タイマーを追加する</div>
         </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">タイマー作成</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        あああ<br>
+                        aria-labela
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info">作成する</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
