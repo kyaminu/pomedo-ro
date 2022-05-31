@@ -40,11 +40,34 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        あああ<br>
-                        aria-labela
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info">作成する</button>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">繰り返し期間</label>
+                                <input value="00:00" type="time" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">集中時間</label>
+                                <input value="00:25" type="time" class="form-control" required>
+                                
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">休憩時間</label>
+                                <input value="00:05" type="time" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">キャラクター</label>
+                                <select class="form-select" disabled>
+                                    <option value="pome" selected>ポメラニアン</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn" type="submit">作成する</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
