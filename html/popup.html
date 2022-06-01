@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel ="stylesheet" href="./css/all.min.css">
+        <script src="js/bootstrap.js"></script>
     </head>
     <body>
         <!-- ナビゲーションバー -->
@@ -24,10 +25,55 @@
                 </a>
             </div>
         </div>
-        <!-- ナビゲーションバー -->
-        <button class="add_timer_button d-flex my-2">
+        <!-- タイマー作成ボタン -->
+        <button class="add_timer_button d-flex my-2" data-bs-toggle="modal" data-bs-target="#modal">
             <div><i class="fa-solid fa-plus"></i></div>
             <div>タイマーを追加する</div>
         </button>
+
+        <!-- モーダル -->
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">タイマー作成</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- タイマーフォーム -->
+                        <form class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label">繰り返し期間</label>
+                                <input value="00:00" type="time" class="form-control">
+                            </div>
+
+                            <div class="col-6 mb-3"></div>
+
+                            <div class="col-6 mb-3">
+                                <label class="form-label">集中時間</label>
+                                <input value="00:25" type="time" class="form-control" required>
+                                
+                            </div>
+
+                            <div class="col-6 mb-3">
+                                <label class="form-label">休憩時間</label>
+                                <input value="00:05" type="time" class="form-control" required>
+                            </div>
+
+                            <div class="col-8 mb-3">
+                                <label class="form-label">キャラクター</label>
+                                <select class="form-select" disabled>
+                                    <option value="pome" selected>ポメラニアン</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn" type="submit">作成する</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
