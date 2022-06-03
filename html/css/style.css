@@ -15,6 +15,7 @@ a {
     font-size: 1px;
 }
 
+/* タイマー追加ボタン */
 .add_timer_button {
     border: #eee;
     background: #eee;
@@ -51,7 +52,7 @@ a {
 }
 
 /* モーダル作成ボタン */
-.btn {
+.make_timer_btn {
     display: inline-block;
     padding: 0.5em 1em;
     text-decoration: none;
@@ -62,6 +63,11 @@ a {
     border: dashed 1px #FFF;
 }
 
-.btn:hover {
+.make_timer_btn:hover {
     border: dotted 1px #FFF;
+}
+
+/* 時間の表記サイズ */
+.timer {
+    font-size: 50px;
 }

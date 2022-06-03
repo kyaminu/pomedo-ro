@@ -11,69 +11,89 @@
         <!-- ナビゲーションバー -->
         <div class="navi">
             <div class="d-flex align-items-center" style="height: 100px">
-                <a href="#" class="p-2 bd-highlight d-flex flex-column align-items-center m-auto link-light" style="width: 100%;">
-                        <div><i class="fa-regular fa-hourglass fa-sm"></i></div>
+                <div class="p-2 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="timerPage">
+                        <div><i class="fa-regular fa-hourglass"></i></div>
                         <div class="icon-name">タイマー</div>
-                </a>
-                <a href="#" class="p-2 bd-highlight d-flex flex-column align-items-center m-auto link-light" style="width: 100%;">
-                    <div><i class="fa-solid fa-paw fa-sm"></i></div>
+                </div>
+                <div class="p-2 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="characterPage">
+                    <div><i class="fa-solid fa-paw"></i></div>
                     <div class="icon-name">キャラ</div>
-                </a>
-                <a href="#" class="p-2 bd-highlight d-flex flex-column align-items-center m-auto link-light" style="width: 100%;">
-                    <div><i class="fa-solid fa-ellipsis fa-sm"></i></div>
+                </div>
+                <div class="p-2 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="otherPage">
+                    <div><i class="fa-solid fa-ellipsis"></i></div>
                     <div class="icon-name">その他</div>
-                </a>
+                </div>
             </div>
         </div>
         <!-- タイマー作成ボタン -->
-        <button class="add_timer_button d-flex my-2" data-bs-toggle="modal" data-bs-target="#modal">
+        <button class="add_timer_button d-flex my-3" data-bs-toggle="modal" data-bs-target="#modal">
             <div><i class="fa-solid fa-plus"></i></div>
-            <div>タイマーを追加する</div>
+            <div>タイマーを設定する</div>
         </button>
+
+        <!-- タイマー表示欄 -->
+        <div class="text-center">
+            <!-- タイマーがある場合 -->
+            <div class="mt-3">
+                <div id="timerDetails"></div>
+            </div>
+            <div class="timer mt-3" id="renderWork"></div>
+            <div class="mt-3" >
+                <button class="btn btn-outline-info m-2" id="startBtn">START</button>
+                <button class="btn btn-outline-warning m-2" id="stopBtn">STOP</button>
+                <button class="btn btn-outline-secondary m-2" id="resetBtn">RESET</button>
+            </div>
+            <!-- タイマーがない場合 -->
+            <div class="m-5">
+                <div>絵が入る</div>
+                <div>タイマーを設定しよう！</div>
+            </div>
+        </div>
 
         <!-- モーダル -->
         <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">タイマー作成</h5>
+                        <h5 class="modal-title" id="modalLabel">タイマー設定</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- タイマーフォーム -->
-                        <form class="row">
+                        <form class="row" name="timerForm">
                             <div class="col-6 mb-3">
                                 <label class="form-label">繰り返し期間</label>
-                                <input value="00:00" type="time" class="form-control">
+                                <input value="00:00" type="time" class="form-control" name="repeat_time" required>
                             </div>
 
                             <div class="col-6 mb-3"></div>
 
                             <div class="col-6 mb-3">
                                 <label class="form-label">集中時間</label>
-                                <input value="00:25" type="time" class="form-control" required>
+                                <input value="00:25" type="time" class="form-control" name="work_time" required>
                                 
                             </div>
 
                             <div class="col-6 mb-3">
                                 <label class="form-label">休憩時間</label>
-                                <input value="00:05" type="time" class="form-control" required>
+                                <input value="00:05" type="time" class="form-control" name="interval" required>
                             </div>
 
                             <div class="col-8 mb-3">
                                 <label class="form-label">キャラクター</label>
-                                <select class="form-select" disabled>
+                                <select class="form-select" id="character" disabled>
                                     <option value="pome" selected>ポメラニアン</option>
                                 </select>
                             </div>
 
                             <div class="modal-footer">
-                                <button class="btn" type="submit">作成する</button>
+                                <button class="make_timer_btn" type="button" id="makeTimerBtn">設定</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="js/popup.js"></script>
     </body>
 </html>
