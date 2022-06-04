@@ -18,4 +18,7 @@ makeTimerBtn.onclick = function () {
     document.getElementById("startBtn").innerHTML = "<button class='btn btn-outline-info d-flex flex-column align-items-center m-2'>START</button>";
     document.getElementById("stopBtn").innerHTML = "<button class='btn btn-outline-warning d-flex flex-column align-items-center m-2'>STOP</button>";
     document.getElementById("resetBtn").innerHTML = "<button class='btn btn-outline-secondary d-flex flex-column align-items-center m-2'>RESET</button>";
+
+    document.getElementById("noTimerImage").style.display ="none";
+    document.getElementById("noTimer").style.display ="none";
 };
