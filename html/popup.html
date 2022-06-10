@@ -37,7 +37,7 @@
             <div class="mt-3">
                 <div id="timerDetails"></div>
             </div>
-            <div class="timer mt-4" id="renderWork"></div>
+            <div class="timer mt-4" id="work_time"></div>
             <div class="d-flex justify-content-evenly mt-3" >
                 <div id="startBtn"></div>
                 <div id="stopBtn"></div>
@@ -63,20 +63,20 @@
                         <form class="row" name="timerForm">
                             <div class="col-6 mb-3">
                                 <label class="form-label">繰り返し期間</label>
-                                <input value="00:00" type="time" class="form-control" name="repeat_time" required>
+                                <input type="number" class="form-control" name="repeat_time" value="0" min="0" max="10" required>
                             </div>
 
                             <div class="col-6 mb-3"></div>
 
                             <div class="col-6 mb-3">
                                 <label class="form-label">集中時間</label>
-                                <input value="00:25" type="time" class="form-control" name="work_time" required>
+                                <input type="number"class="form-control" name="work_time" value="25" min="10" max="55" required>
                                 
                             </div>
 
                             <div class="col-6 mb-3">
                                 <label class="form-label">休憩時間</label>
-                                <input value="00:05" type="time" class="form-control" name="interval" required>
+                                <input type="number" class="form-control" name="interval" value="5" min="5" max="15" required>
                             </div>
 
                             <div class="col-8 mb-3">
