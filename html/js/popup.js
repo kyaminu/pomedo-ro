@@ -1,4 +1,3 @@
-// 変数定義
 const timerPage = document.getElementById('timerPage');
 const characterPage = document.getElementById('characterPage');
 const otherPage = document.getElementById('otherPage');
@@ -7,14 +6,18 @@ const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
 
-
-// タイマーを作成したらホームに表示する箇所 
 makeTimerBtn.onclick = function () {
-    let repeat_time = document.forms.timerForm.repeat_time.value;
-    let work_time = document.forms.timerForm.work_time.value;
-    let interval = document.forms.timerForm.interval.value;
+    let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);
+    let work_time = parseInt(document.forms.timerForm.work_time.value, 10);
+    let interval = parseInt(document.forms.timerForm.interval.value, 10);
 
-    document.getElementById("work_time").innerHTML = String(work_time).padStart(2,"0") + ":00";
+    let stopId;// タイマー停止用ID
+    let view_timer = document.getElementById("view_timer");
+    let working_time = work_time * 60
+    let interval_time = interval * 60
+
+    //タイマーを作成したら、タイマーとボタンを表示
+    document.getElementById("view_timer").innerHTML = String(work_time).padStart(2,"0") + ":00";
     if (repeat_time > 0) {
         document.getElementById("timerDetails").innerHTML = `${repeat_time}時間の間<br>${work_time}分集中 / ${interval}分休憩を繰り返す`;
     }else{
@@ -27,50 +30,58 @@ makeTimerBtn.onclick = function () {
 
     document.getElementById("noTimerImage").style.display ="none";
     document.getElementById("noTimer").style.display ="none";
-};
 
-startBtn.onclick = function() {
-    start();
-};
-
-stopBtn.onclick = function() {
-    stop();
-};
-
-resetBtn.onclick = function() {
-    reset();
-};
-
-// タイマー停止用ID
-let intervalId;
-let work_time = parseInt(document.forms.timerForm.work_time.value, 10);
-let time = work_time * 60
-let work_timer = document.getElementById("work_time");
-
-function start() {
-    if (intervalId == null) {
-        intervalId = setInterval(count_down, 1000);
+    //各ボタンを押した時の動作
+    startBtn.onclick = function() {
+        start();
+    };
+    
+    stopBtn.onclick = function() {
+        stop();
+    };
+    
+    resetBtn.onclick = function() {
+        reset();
+    };
+    
+    function start() {
+        if (stopId == null) {
+            stopId = setInterval(count_down, 1000);
+        }
     }
-}
+    
+    function stop() {
+        clearInterval(stopId);
+        stopId = null;
+    };
+    
+    function reset() {
+        // 経過秒数を初期化
+        // spanedSec = work_time;
+        // work_timer.innerHTML = String(spanedSec).padStart(2,"0") + ":00";
+    };
 
-function stop() {
-    clearInterval(intervalId);
-    intervalId = null;
-};
+    function count_down() {
+        if (working_time > 0) {
+            let min = Math.floor(working_time / 60);
+            let sec = working_time % 60;   
+            working_time--;
+            view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+        }else if (working_time === 0) {
+            interval_count_down()
+        }
+        
+        function interval_count_down() {
+            if (interval_time > 0) {
+                let min = Math.floor(interval_time / 60);
+                let sec = interval_time % 60;   
+                interval_time--;
+                view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+            }else if (interval_time === 0) {
+                view_timer.innerHTML = "TIME UP!";
+            }
+        };
+    };
 
-function reset() {
-    // 経過秒数を初期化
-    // spanedSec = work_time;
-    // work_timer.innerHTML = String(spanedSec).padStart(2,"0") + ":00";
-};
-
-function count_down() {
-    if (time > 0) {
-        let min = Math.floor(time / 60);
-        let sec = time % 60;   
-        time--;
-        work_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-    }else if (time === 0) {
-        work_timer.innerHTML = "TIME UP!";//後でここに休憩時間入れるかも？
-    }
+    
 };
