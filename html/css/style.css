@@ -1,8 +1,10 @@
+/* 全体の大きさ */
 body {
     width: 400px;
     height: 550px;
 }
 
+/* タブの装飾 */
 a {
     text-decoration:none;
 }
@@ -13,6 +15,23 @@ a {
 
 .icon-name {
     font-size: 1px;
+}
+
+.tab{
+    cursor:pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.tab:hover{
+    background: rgb(83, 137, 137);
+}
+
+.content{
+    display:none;
+}
+
+.content.is-show{
+    display:block;
 }
 
 /* タイマー追加ボタン */
@@ -67,7 +86,7 @@ a {
     border: dotted 1px #FFF;
 }
 
-/* 時間の表記サイズ */
+/* タイマーの表記サイズ */
 .timer {
     font-size: 50px;
 }

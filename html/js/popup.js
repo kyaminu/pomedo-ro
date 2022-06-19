@@ -6,6 +6,27 @@ const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
 
+//タブの切り替え
+document.addEventListener('DOMContentLoaded', function(){
+    // タブに対してクリックイベントを適用
+    const tabs = document.getElementsByClassName('tab');
+    for(let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', tabSwitch, false);
+    }
+    // タブをクリックすると実行する関数
+    function tabSwitch(){
+        // タブのclassの値を変更
+        document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+        this.classList.add('is-active');
+        // コンテンツのclassの値を変更
+        document.getElementsByClassName('is-show')[0].classList.remove('is-show');
+        const arrayTabs = Array.prototype.slice.call(tabs);
+        const index = arrayTabs.indexOf(this);
+        document.getElementsByClassName('content')[index].classList.add('is-show');
+    };
+}, false);
+
+//タイマー作成ボタンを押した時
 makeTimerBtn.onclick = function () {
     let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);
     let work_time = parseInt(document.forms.timerForm.work_time.value, 10);
