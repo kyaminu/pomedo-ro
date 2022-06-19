@@ -6,6 +6,27 @@ const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
 
+//タブの切り替え
+document.addEventListener('DOMContentLoaded', function(){
+    // タブに対してクリックイベントを適用
+    const tabs = document.getElementsByClassName('tab');
+    for(let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', tabSwitch, false);
+    }
+    // タブをクリックすると実行する関数
+    function tabSwitch(){
+        // タブのclassの値を変更
+        document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+        this.classList.add('is-active');
+        // コンテンツのclassの値を変更
+        document.getElementsByClassName('is-show')[0].classList.remove('is-show');
+        const arrayTabs = Array.prototype.slice.call(tabs);
+        const index = arrayTabs.indexOf(this);
+        document.getElementsByClassName('content')[index].classList.add('is-show');
+    };
+}, false);
+
+//タイマー作成ボタンを押した時
 makeTimerBtn.onclick = function () {
     let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);
     let work_time = parseInt(document.forms.timerForm.work_time.value, 10);
@@ -13,15 +34,16 @@ makeTimerBtn.onclick = function () {
 
     let stopId;// タイマー停止用ID
     let view_timer = document.getElementById("view_timer");
+    let timerDetails = document.getElementById("timerDetails")
     let working_time = work_time * 60
     let interval_time = interval * 60
 
     //タイマーを作成したら、タイマーとボタンを表示
-    document.getElementById("view_timer").innerHTML = String(work_time).padStart(2,"0") + ":00";
+    view_timer.innerHTML = String(work_time).padStart(2,"0") + ":00";
     if (repeat_time > 1) {
-        document.getElementById("timerDetails").innerHTML = `${repeat_time}回<br>${work_time}分集中 / ${interval}分休憩を繰り返す`;
+        timerDetails.innerHTML = `${repeat_time}回<br>${work_time}分集中 / ${interval}分休憩を繰り返す`;
     }else{
-        document.getElementById("timerDetails").innerHTML = `${work_time}分集中 / ${interval}分休憩を繰り返す`;
+        timerDetails.innerHTML = `${work_time}分集中 / ${interval}分休憩を繰り返す`;
     }
 
     startBtn.innerHTML = "<button class='btn btn-outline-info d-flex flex-column align-items-center m-2'>START</button>";
@@ -63,9 +85,12 @@ makeTimerBtn.onclick = function () {
     };
     
     function reset() {
-        // 経過秒数を初期化
-        // spanedSec = work_time;
-        // work_timer.innerHTML = String(spanedSec).padStart(2,"0") + ":00";
+        clearInterval(stopId);
+        stopId = null;
+        working_time = work_time * 60
+        let min = Math.floor(working_time / 60);
+        let sec = working_time % 60;   
+        view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     };
 
     function count_down() {
