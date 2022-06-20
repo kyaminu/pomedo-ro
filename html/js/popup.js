@@ -34,9 +34,12 @@ makeTimerBtn.onclick = function () {
 
     let stopId;// タイマー停止用ID
     let view_timer = document.getElementById("view_timer");
-    let timerDetails = document.getElementById("timerDetails")
-    let working_time = work_time * 60
-    let interval_time = interval * 60
+    let timerDetails = document.getElementById("timerDetails");
+    let working_time = work_time * 60; //オンタイムの分換算
+    let interval_time = interval * 60; //オフタイムの分換算
+    let one_roop_minutes  =  working_time + interval_time; //１ループあたりの秒数
+    let total_minutes = one_roop_minutes * repeat_time; //総ループの合計秒数
+    let elapsed_time = 0; //秒数を入れる経過時間
 
     //タイマーを作成したら、タイマーとボタンを表示
     view_timer.innerHTML = String(work_time).padStart(2,"0") + ":00";
@@ -54,15 +57,8 @@ makeTimerBtn.onclick = function () {
     document.getElementById("noTimer").style.display ="none";
 
     //各ボタンを押した時の動作
-    startBtn.onclick = async function() {
-        // for(let i = 0; i < repeat_time; i++){
-        //     await start();
-        //     alert("test")
-        // };
-        // view_timer.innerHTML = "TIME UP!";
+    startBtn.onclick = function() {
         start();
-        start();
-        //2回連続関数で入力しても反応なし
     };
     
     stopBtn.onclick = function() {
@@ -101,6 +97,13 @@ makeTimerBtn.onclick = function () {
             view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
         }else{
             interval_count_down()
+            elapsed_time += one_roop_minutes;
+            if(elapsed_time <= total_minutes){
+                working_time = work_time * 60;
+                interval_time = interval * 60;
+            }else{
+                view_timer.innerHTML = "TIME UP!";
+            };
         };
     };
     
@@ -110,14 +113,6 @@ makeTimerBtn.onclick = function () {
             let sec = interval_time % 60;   
             interval_time--;
             view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-        // }else if (interval_time === 0) {
-        //     view_timer.innerHTML = "TIME UP!";
         };
     };
 };
-
-// for(let i = 0; i < repeat_time; i++){
-// };
-// if (i === repeat_time){
-//     view_timer.innerHTML = "TIME UP!";
-// };
