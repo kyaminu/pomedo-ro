@@ -11,15 +11,15 @@
         <!-- タブ -->
         <div class="navi">
             <div class="d-flex align-items-center">
-                <div class="tab tab-timer is-active px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="timerPage">
+                <div class="tab tab-timer is-active px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
                         <div><i class="fa-regular fa-hourglass"></i></div>
                         <div class="icon-name">タイマー</div>
                 </div>
-                <div class="tab tab-character px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="characterPage">
+                <div class="tab tab-character px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
                     <div><i class="fa-solid fa-paw"></i></div>
                     <div class="icon-name">キャラ</div>
                 </div>
-                <div class="tab tab-other px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;" id="otherPage">
+                <div class="tab tab-other px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
                     <div><i class="fa-solid fa-ellipsis"></i></div>
                     <div class="icon-name">その他</div>
                 </div>
@@ -29,7 +29,7 @@
         <!-- タイマーコンテンツ -->
         <div class="content tab-timer is-show">
             <!-- タイマー作成ボタン -->
-            <button class="add_timer_button d-flex my-4" data-bs-toggle="modal" data-bs-target="#modal">
+            <button class="add_timer_button d-flex my-4" data-bs-toggle="modal" data-bs-target="#modal" id="openModalBtn">
                 <div><i class="fa-solid fa-plus"></i></div>
                 <div>タイマーを設定する</div>
             </button>
@@ -49,7 +49,7 @@
                 <!-- タイマーがない場合 -->
                 <div class="m-5">
                     <div id="noTimerImage">絵が入る</div>
-                    <div id="noTimer">タイマーを設定しよう！</div>
+                    <div id="noTimerText">タイマーを設定しよう！</div>
                 </div>
             </div>
 
@@ -107,6 +107,8 @@
         <div class="content tab-timer">
             その他
         </div>
+
+        <audio src="src/ontime_dog.mp3#t=0,2.5" id="pomeOnAlerm"></audio>
         <script src="js/popup.js"></script>
     </body>
 </html>
