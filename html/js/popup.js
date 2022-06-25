@@ -63,7 +63,6 @@ makeTimerBtn.onclick = function () {
     //各ボタンを押した時の動作
     startBtn.onclick = function() {
         start();
-        openModalBtn.style.visibility = 'hidden'
     };
     
     stopBtn.onclick = function() {
@@ -76,7 +75,7 @@ makeTimerBtn.onclick = function () {
     
     function start() {
         if (stopId == null) {
-            stopId = setInterval(count_down, 1000);
+            stopId = setInterval(pomodoro_timer, 1000);
         }
     };
     
@@ -94,13 +93,10 @@ makeTimerBtn.onclick = function () {
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     };
 
-    function count_down() {
+    function pomodoro_timer() {
         if (work_second >= 0) {
-            let min = Math.floor(work_second / 60);
-            let sec = work_second % 60;   
-            work_second--;
-            view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-        }else{
+            count_down()
+        }else if(interval_second >= 0){
             interval_count_down()
             elapsed_time += one_roop_second;
             if(elapsed_time <= total_second){
@@ -108,20 +104,30 @@ makeTimerBtn.onclick = function () {
                 interval_second = interval * 60;
             }else{
                 view_timer.innerHTML = "TIME UP!";
+                pomeOnAlerm.play();
+                clearInterval(stopId);
             };
         };
     };
-    
-    function interval_count_down() {
-        if (interval_second >= 0) {
-            let min = Math.floor(interval_second / 60);
-            let sec = interval_second % 60;   
-            interval_second--;
-            view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-        };
-    };
-};
 
-// if (work_second == work_time * 60){
-//     pomeOnAlerm.play();
-// }
+    //集中時間用カウントダウン
+    function count_down() {
+        let min = Math.floor(work_second / 60);
+        let sec = work_second % 60;   
+        work_second--;
+        view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+    }
+
+    //インターバル用カウントダウン
+    function interval_count_down() {
+        let min = Math.floor(interval_second / 60);
+        let sec = interval_second % 60;   
+        interval_second--;
+        view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+    };
+
+    // if (work_second / (work_time * 60) == 1){
+    //     pomeOnAlerm.play();
+    //     console.log(work_second)
+    // }
+};
