@@ -60,12 +60,13 @@ makeTimerBtn.onclick = function () {
     stopBtn.innerHTML = "<button class='btn btn-outline-warning d-flex flex-column align-items-center m-2'>STOP</button>";
     resetBtn.innerHTML = "<button class='btn btn-outline-secondary d-flex flex-column align-items-center m-2'>RESET</button>";
 
-    noTimerImage.style.display ="none";
-    noTimerText.style.display ="none";
+    noTimerImage.style.display = 'none';
+    noTimerText.style.display = 'none';
 
     //各ボタンを押した時の動作
     startBtn.onclick = function() {
         start();
+        openModalBtn.setAttribute("disabled", true);
     };
     
     stopBtn.onclick = function() {
@@ -74,6 +75,7 @@ makeTimerBtn.onclick = function () {
     
     resetBtn.onclick = function() {
         reset();
+        openModalBtn.removeAttribute("disabled")
     };
     
     function start() {
