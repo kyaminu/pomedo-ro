@@ -5,8 +5,11 @@ const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
 const noTimerImage = document.getElementById("noTimerImage")
 const noTimerText = document.getElementById("noTimerText")
-const pomeOnAlerm = document.getElementById("pomeOnAlerm")
-pomeOnAlerm.volume = 1.0;
+
+const pomeWorkAlerm = document.getElementById("pomeWorkAlerm")
+pomeWorkAlerm.volume = 1.0;
+// let alerm_work_flag = true
+//フラグ管理
 
 //タブの切り替え
 document.addEventListener('DOMContentLoaded', function(){
@@ -94,6 +97,10 @@ makeTimerBtn.onclick = function () {
     };
 
     function pomodoro_timer() {
+        // if (work_second / (work_time * 60) == 1){
+        //     pomeWorkAlerm.play();
+        //     console.log(work_second)
+        // }
         if (work_second >= 0) {
             count_down()
         }else if(interval_second >= 0){
@@ -104,7 +111,7 @@ makeTimerBtn.onclick = function () {
                 interval_second = interval * 60;
             }else{
                 view_timer.innerHTML = "TIME UP!";
-                pomeOnAlerm.play();
+                pomeWorkAlerm.play();//終了のアラーム
                 clearInterval(stopId);
             };
         };
@@ -125,9 +132,4 @@ makeTimerBtn.onclick = function () {
         interval_second--;
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     };
-
-    // if (work_second / (work_time * 60) == 1){
-    //     pomeOnAlerm.play();
-    //     console.log(work_second)
-    // }
 };
