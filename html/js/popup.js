@@ -7,9 +7,8 @@ const noTimerImage = document.getElementById("noTimerImage")
 const noTimerText = document.getElementById("noTimerText")
 
 const pomeWorkAlerm = document.getElementById("pomeWorkAlerm")
-pomeWorkAlerm.volume = 1.0;
-// let alerm_work_flag = true
-//フラグ管理
+const pomeIntervalAlerm = document.getElementById("pomeIntervalAlerm")
+const finishAlerm = document.getElementById("finishAlerm")
 
 //タブの切り替え
 document.addEventListener('DOMContentLoaded', function(){
@@ -99,21 +98,26 @@ makeTimerBtn.onclick = function () {
     };
 
     function pomodoro_timer() {
-        // if (work_second / (work_time * 60) == 1){
-        //     pomeWorkAlerm.play();
-        //     console.log(work_second)
-        // }
+        if (work_second == work_time * 60){
+            pomeWorkAlerm.play();
+        }
+
+        if (work_second == 0 && interval_second == interval * 60){
+            pomeIntervalAlerm.play();
+        }
+        
         if (work_second >= 0) {
             count_down()
-        }else if(interval_second >= 0){
+        }else if(interval_second > 0){
             interval_count_down()
+        }else if(interval_second == 0){
             elapsed_time += one_roop_second;
-            if(elapsed_time <= total_second){
+            if(elapsed_time < total_second){
                 work_second = work_time * 60;
                 interval_second = interval * 60;
             }else{
                 view_timer.innerHTML = "TIME UP!";
-                pomeWorkAlerm.play();//終了のアラーム
+                finishAlerm.play();
                 clearInterval(stopId);
             };
         };
