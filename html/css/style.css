@@ -70,6 +70,11 @@ a {
     border-color: #FFF;
 }
 
+.add_timer_button:disabled {
+    background: #afafaf;
+    color: rgb(0, 0, 0);
+}
+
 /* モーダル作成ボタン */
 .make_timer_btn {
     display: inline-block;
