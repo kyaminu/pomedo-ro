@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
 makeTimerBtn.onclick = function () {
     let view_timer = document.getElementById("view_timer");//実際に時間表示させる箇所
     let timerDetails = document.getElementById("timerDetails");//タイマー詳細
+    let status = document.getElementById("status");
+    status.innerHTML = "";
 
     //フォームから取得した内容
     let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);//くり返し回数
@@ -52,7 +54,7 @@ makeTimerBtn.onclick = function () {
     if (repeat_time > 1) {
         timerDetails.innerHTML = `${repeat_time}回<br>${work_time}分集中 / ${interval}分休憩を繰り返す`;
     }else{
-        timerDetails.innerHTML = `${work_time}分集中 / ${interval}分休憩を繰り返す`;
+        timerDetails.innerHTML = `${work_time}分集中 / ${interval}分休憩`;
     }
 
     startBtn.innerHTML = "<button class='btn btn-outline-info d-flex flex-column align-items-center m-2'>START</button>";
@@ -108,8 +110,10 @@ makeTimerBtn.onclick = function () {
         
         if (work_second >= 0) {
             count_down()
+            status.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
         }else if(interval_second > 0){
             interval_count_down()
+            status.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
         }else if(interval_second == 0){
             elapsed_time += one_roop_second;
             if(elapsed_time < total_second){
@@ -117,6 +121,7 @@ makeTimerBtn.onclick = function () {
                 interval_second = interval * 60;
             }else{
                 view_timer.innerHTML = "TIME UP!";
+                status.innerHTML = "";
                 finishAlerm.play();
                 clearInterval(stopId);
             };
