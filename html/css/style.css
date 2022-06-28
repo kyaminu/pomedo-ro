@@ -95,3 +95,33 @@ a {
 .timer {
     font-size: 50px;
 }
+
+.details{
+    height: 70px;
+}
+
+.working{
+	text-align:center;
+	line-height:0.95em;
+	font-weight:bold;
+	color: #FFF;
+	text-shadow: 
+		0 0 0.05em #F06292,
+		0 0 0.10em #F06292,
+		0 0 0.15em #F06292,
+		0 0 0.30em #F06292;
+	filter: saturate(80%);
+}
+
+.intervaling{
+    text-align:center;
+	line-height:0.95em;
+	font-weight:bold;
+	color: #FFF;
+	text-shadow: 
+		0 0 0.05em #2962FF,
+		0 0 0.10em #2962FF,
+		0 0 0.15em #2962FF,
+		0 0 0.30em #2962FF;
+	filter: saturate(80%);
+}
