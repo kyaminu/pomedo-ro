@@ -5,6 +5,10 @@ body {
 }
 
 /* タブの装飾 */
+.tab{
+    width: 100%;
+}
+
 a {
     text-decoration:none;
 }
@@ -124,4 +128,29 @@ a {
 		0 0 0.15em #2962FF,
 		0 0 0.30em #2962FF;
 	filter: saturate(80%);
+}
+
+.index{
+    width: 180px;
+    height: 200px;
+    border-radius:10px;
+    background-color: rgb(233, 233, 233);
+}
+
+.sound-test{
+    cursor:pointer;
+}
+
+.illust{
+    width: 80px;
+    height: auto;
+}
+
+.retention{
+    color: #FFF;
+    width: 60px;
+    height: 30px;
+    border-radius:30px;
+    background-color: rgb(224, 137, 23);
+    margin: 0 0 0 auto;
 }

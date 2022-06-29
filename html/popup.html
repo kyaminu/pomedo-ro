@@ -11,15 +11,15 @@
         <!-- タブ -->
         <div class="navi">
             <div class="d-flex align-items-center">
-                <div class="tab tab-timer is-active px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
+                <div class="tab tab-timer is-active px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light">
                         <div><i class="fa-regular fa-hourglass"></i></div>
                         <div class="icon-name">タイマー</div>
                 </div>
-                <div class="tab tab-character px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
+                <div class="tab tab-character px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light">
                     <div><i class="fa-solid fa-paw"></i></div>
                     <div class="icon-name">キャラ</div>
                 </div>
-                <div class="tab tab-other px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light" style="width: 100%;">
+                <div class="tab tab-other px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light">
                     <div><i class="fa-solid fa-ellipsis"></i></div>
                     <div class="icon-name">その他</div>
                 </div>
@@ -29,14 +29,14 @@
         <!-- タイマーコンテンツ -->
         <div class="content tab-timer is-show">
             <!-- タイマー作成ボタン -->
-            <button class="add_timer_button d-flex my-4" data-bs-toggle="modal" data-bs-target="#modal" id="openModalBtn">
+            <button class="add_timer_button d-flex mt-4 mb-2" data-bs-toggle="modal" data-bs-target="#modal" id="openModalBtn">
                 + タイマーを設定する
             </button>
 
             <!-- タイマー表示欄 -->
             <div class="text-center">
                 <!-- タイマーがある場合 -->
-                <div class="details mt-3">
+                <div class="details">
                     <div id="timerDetails"></div>
                     <div id="status"></div>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
                 <!-- タイマーがない場合 -->
                 <div>
-                    <div id="noTimerImage">絵が入る</div>
+                    <div id="noTimerImage"><img src="src/pome.png" class="illust"></div>
                     <div id="noTimerText">タイマーを設定しよう！</div>
                 </div>
             </div>
@@ -100,7 +100,25 @@
 
         <!-- キャラクターコンテンツ -->
         <div class="content tab-timer">
-            キャラ選択
+            <div class="d-flex">
+                <div class="index m-2">
+                    <div class="retention text-center mt-1 me-1">所持</div>
+                    <div class="d-flex flex-column text-center">
+                        <img src="src/pome.png" class="illust mx-auto d-block">
+                        <div class="m-1">ポメ</div>
+                        <div class="d-flex container">
+                            <div class="m-1 sound-test" >
+                                集中
+                                <i class="fa-solid fa-volume-low"></i>
+                            </div>
+                            <div class="m-1 sound-test">
+                                休憩
+                                <i class="fa-solid fa-volume-low"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- その他コンテンツ -->
