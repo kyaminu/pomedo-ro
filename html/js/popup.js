@@ -6,6 +6,9 @@ const resetBtn = document.getElementById('resetBtn');
 const noTimerImage = document.getElementById("noTimerImage")
 const noTimerText = document.getElementById("noTimerText")
 
+const pome_work_sound_test_btn = document.getElementById("pome_work_sound_test_btn")
+const pome_interval_sound_test_btn = document.getElementById("pome_interval_sound_test_btn")
+
 const pomeWorkAlerm = document.getElementById("pomeWorkAlerm")
 const pomeIntervalAlerm = document.getElementById("pomeIntervalAlerm")
 const finishAlerm = document.getElementById("finishAlerm")
@@ -144,3 +147,11 @@ makeTimerBtn.onclick = function () {
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     };
 };
+
+pome_work_sound_test_btn.onclick = function() {
+    pomeWorkAlerm.play();
+}
+
+pome_interval_sound_test_btn.onclick = function() {
+    pomeIntervalAlerm.play();
+}
