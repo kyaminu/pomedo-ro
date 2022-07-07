@@ -33,8 +33,12 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 }, false);
 
-//タイマー作成ボタンを押した時
 makeTimerBtn.onclick = function () {
+    makeTimer();
+};
+
+//タイマー作成ボタンを押した時
+function  makeTimer() {
     let view_timer = document.getElementById("view_timer");//実際に時間表示させる箇所
     let timerDetails = document.getElementById("timerDetails");//タイマー詳細
     let status = document.getElementById("status");
@@ -55,7 +59,7 @@ makeTimerBtn.onclick = function () {
     //タイマーを作成したら、タイマーとボタンを表示
     view_timer.innerHTML = String(work_time).padStart(2,"0") + ":00";
     if (repeat_time > 1) {
-        timerDetails.innerHTML = `${repeat_time}回<br>${work_time}分集中 / ${interval}分休憩を繰り返す`;
+        timerDetails.innerHTML = `${repeat_time}回 ${work_time}分集中 / ${interval}分休憩を繰り返す`;
     }else{
         timerDetails.innerHTML = `${work_time}分集中 / ${interval}分休憩`;
     }
@@ -98,7 +102,8 @@ makeTimerBtn.onclick = function () {
         stopId = null;
         work_second = work_time * 60
         let min = Math.floor(work_second / 60);
-        let sec = work_second % 60;   
+        let sec = work_second % 60;
+        status.innerHTML = ""; 
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     };
 
@@ -134,7 +139,7 @@ makeTimerBtn.onclick = function () {
     //集中時間用カウントダウン
     function count_down() {
         let min = Math.floor(work_second / 60);
-        let sec = work_second % 60;   
+        let sec = work_second % 60;
         work_second--;
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
     }
