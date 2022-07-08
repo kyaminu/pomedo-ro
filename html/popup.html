@@ -2,10 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel ="stylesheet" href="./css/all.min.css">
-        <script src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel ="stylesheet" href="/css/all.min.css">
+        <script src="/js/bootstrap.js"></script>
     </head>
     <body>
         <!-- タブ -->
@@ -36,20 +36,22 @@
             <!-- タイマー表示欄 -->
             <div class="text-center">
                 <!-- タイマーがある場合 -->
-                <div class="details">
-                    <div id="timerDetails"></div>
-                    <div id="status"></div>
-                </div>
-                <div class="timer" id="view_timer"></div>
-                <div class="d-flex justify-content-evenly mt-3" >
-                    <div id="startBtn"></div>
-                    <div id="stopBtn"></div>
-                    <div id="resetBtn"></div>
+                <div id="haveTimer">
+                    <div class="details">
+                        <div id="timerDetails"></div>
+                        <div id="status"></div>
+                    </div>
+                    <div class="timer" id="view_timer"></div>
+                    <div class="d-flex justify-content-evenly mt-3" >
+                        <div id="startBtn"></div>
+                        <div id="stopBtn"></div>
+                        <div id="resetBtn"></div>
+                    </div>
                 </div>
                 <!-- タイマーがない場合 -->
-                <div>
-                    <div id="noTimerImage"><img src="src/pome.png" class="illust"></div>
-                    <div id="noTimerText">タイマーを設定しよう！</div>
+                <div id="noTimer">
+                    <div><img src="/src/pome.png" class="illust"></div>
+                    <div>タイマーを設定しよう！</div>
                 </div>
             </div>
 
@@ -104,7 +106,7 @@
                 <div class="index m-2">
                     <div class="retention text-center mt-1 me-1">所持</div>
                     <div class="d-flex flex-column text-center">
-                        <img src="src/pome.png" class="illust mx-auto d-block">
+                        <img src="/src/pome.png" class="illust mx-auto d-block">
                         <div class="m-1">ポメ</div>
                         <div class="d-flex container">
                             <div class="m-1 sound-test" id="pome_work_sound_test_btn">
@@ -126,9 +128,9 @@
             その他
         </div>
 
-        <audio src="src/pome_work_alerm.mp3#t=0,2.5" id="pomeWorkAlerm"></audio>
-        <audio src="src/pome_interval_alerm.mp3" id="pomeIntervalAlerm"></audio>
-        <audio src="src/finish_alerm.mp3" id="finishAlerm"></audio>
-        <script src="js/popup.js"></script>
+        <audio src="/src/pome_work_alerm.mp3#t=0,2.5" id="pomeWorkAlerm"></audio>
+        <audio src="/src/pome_interval_alerm.mp3" id="pomeIntervalAlerm"></audio>
+        <audio src="/src/finish_alerm.mp3" id="finishAlerm"></audio>
+        <script src="/js/popup.js"></script>
     </body>
 </html>
