@@ -13,7 +13,19 @@
         "background"
     ],
     "action": {
-        "default_popup": "html/popup.html"
+        "default_popup": "html/popup.html",
+        "default_icon": {
+            "16": "/src/images/pome_happy_1.png",
+            "32": "/src/images/pome_happy_1.png",
+            "48": "/src/images/pome_happy_1.png",
+            "128": "/src/images/pome_happy_1.png"
+        }
+    },
+    "icons": {
+        "16": "/src/images/pome_happy_1.png",
+        "32": "/src/images/pome_happy_1.png",
+        "48": "/src/images/pome_happy_1.png",
+        "128": "/src/images/pome_happy_1.png"
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
