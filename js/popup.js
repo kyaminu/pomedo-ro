@@ -10,19 +10,16 @@ const pome_interval_sound_test_btn = document.getElementById("pome_interval_soun
 let view_timer = document.getElementById("view_timer");//実際に時間表示させる箇所
 let timerDetails = document.getElementById("timerDetails");//タイマー詳細
 let work_or_interval = document.getElementById("work_or_interval");//集中or休憩
-let timerStatus;//タイマーが活動中か否か
+let timerStatus;//タイマーが活動中か否かで,経過時間を表示の有無を決める
+let btnStatus;//ボタンがstart・stopでpopupを再度開いた時の分岐点
 
-let stopId;// タイマー停止用ID
-chrome.storage.local.set({stopId: stopId});
+let popupStopId;// タイマー停止用ID
+// chrome.storage.local.set({stopId: stopId});//popupではいらんかも
 
-const pomeWorkAlerm = document.getElementById("pomeWorkAlerm")
-chrome.storage.local.set({pomeWorkAlerm: pomeWorkAlerm});
-
-const pomeIntervalAlerm = document.getElementById("pomeIntervalAlerm")
-chrome.storage.local.set({pomeIntervalAlerm: pomeIntervalAlerm});
-
-const finishAlerm = document.getElementById("finishAlerm")
-chrome.storage.local.set({finishAlerm: finishAlerm});
+//音声
+const pomeWorkAlarm = document.getElementById("pomeWorkAlarm")
+const pomeIntervalAlarm = document.getElementById("pomeIntervalAlarm")
+const finishAlarm = document.getElementById("finishAlarm")
 
 //タブの切り替え
 document.addEventListener('DOMContentLoaded', function(){
@@ -44,56 +41,9 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 }, false);
 
-//タイマーが稼働中であれば、その経過時間を表示する
-chrome.storage.local.get(['timerStatus'], function(v) {
-    console.log(v.timerStatus);
-    if(v.timerStatus == true){
-        timer_display()
-
-        startBtn.onclick = function() {
-            start();
-        };
-        
-        stopBtn.onclick = function() {
-            stop();
-        };
-        
-        resetBtn.onclick = function() {
-            reset();
-        };
-    }
-});
-
-makeTimerBtn.onclick = function () {
-    makeTimer();
-};
-
-//タイマー作成ボタンを押した時
-function  makeTimer() {
-    //フォームから取得した内容
-    let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);//くり返し回数
-    chrome.storage.local.set({repeat_time: repeat_time});
-
-    let work_time = parseInt(document.forms.timerForm.work_time.value, 10);//集中時間
-    chrome.storage.local.set({work_time: work_time});
-
-    let interval = parseInt(document.forms.timerForm.interval.value, 10);//休憩時間
-    chrome.storage.local.set({interval: interval});
-
-    let work_second = work_time * 60; //ONタイムの秒換算
-    chrome.storage.local.set({work_second: work_second});
-
-    let interval_second = interval * 60; //OFFタイムの秒換算
-    chrome.storage.local.set({interval_second: interval_second});
-
-    let one_roop_second  =  work_second + interval_second; //１ループあたりの秒数
-    chrome.storage.local.set({one_roop_second: one_roop_second});
-
-    let total_second = one_roop_second * repeat_time; //総ループの合計秒数
-    chrome.storage.local.set({total_second: total_second});
-
-    let elapsed_time = 0; //秒数を入れる経過時間
-    chrome.storage.local.set({elapsed_time: elapsed_time});
+//「タイマーを設定する▷」を押した時
+makeTimerBtn.onclick = function() {
+    get_timer_form();
 
     //タイマーを作成したら、タイマーとボタンを表示
     timer_display();
@@ -112,6 +62,32 @@ function  makeTimer() {
     };
 };
 
+//フォームから時間内容を取得
+function get_timer_form(){
+    let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);//くり返し回数
+    chrome.storage.local.set({repeat_time: repeat_time});
+
+    let work_time = parseInt(document.forms.timerForm.work_time.value, 10);//集中時間(分)
+    chrome.storage.local.set({work_time: work_time});
+
+    let interval = parseInt(document.forms.timerForm.interval.value, 10);//休憩時間(分)
+    chrome.storage.local.set({interval: interval});
+
+    let work_second = work_time * 60; //ONタイムの秒換算
+    chrome.storage.local.set({work_second: work_second});
+
+    let interval_second = interval * 60; //OFFタイムの秒換算
+    chrome.storage.local.set({interval_second: interval_second});
+
+    let one_roop_second  =  work_second + interval_second; //１ループあたりの秒数
+    chrome.storage.local.set({one_roop_second: one_roop_second});
+
+    let total_second = one_roop_second * repeat_time; //総ループの合計秒数
+    chrome.storage.local.set({total_second: total_second});
+
+    let elapsed_time = 0; //秒数を入れる経過時間
+    chrome.storage.local.set({elapsed_time: elapsed_time});
+}
 //タイマーを作成したら、タイマーとボタンを表示
 function timer_display(){
     chrome.storage.local.get(['repeat_time', 'work_time','interval','work_second'], function(v){
@@ -134,32 +110,49 @@ function timer_display(){
 }
 
 function start() {
+    chrome.runtime.sendMessage({switch: "on"});
+
     openModalBtn.setAttribute("disabled", true);
-    timerStatus = true            
+
+    timerStatus = true
     chrome.storage.local.set({timerStatus: timerStatus});
-    if (stopId == null) {
-        stopId = setInterval(pomodoro_timer, 1000);
-        chrome.storage.local.set({stopId: stopId});
-    }
+
+    btnStatus = "start"
+    chrome.storage.local.set({btnStatus: btnStatus});
+
+    popup_pomodoro_timer()
+    // if (popupStopId == null) {
+    //     popupStopId = setInterval(popup_pomodoro_timer, 1000);
+    //     chrome.storage.local.set({popupStopId: popupStopId});
+    // }
 };
 
 function stop() {
-    clearInterval(stopId);
-    stopId = null;
-    chrome.storage.local.set({stopId: stopId});
+    chrome.runtime.sendMessage({switch: "stop"});
+
+    btnStatus = "stop"
+    chrome.storage.local.set({btnStatus: btnStatus});
+
+    // clearInterval(popupStopId);
+    // popupStopId = null;
+    // chrome.storage.local.set({popupStopId: popupStopId});
 };
 
 function reset() {
+    chrome.runtime.sendMessage({switch: "reset"});
+
     openModalBtn.removeAttribute("disabled")
     work_or_interval.innerHTML = "";
     
-    clearInterval(stopId);
-    stopId = null;
-    chrome.storage.local.set({stopId: stopId});
+    // clearInterval(popupStopId);
+    // popupStopId = null;
+    // chrome.storage.local.set({popupStopId: popupStopId});
 
     timerStatus = false          
     chrome.storage.local.set({timerStatus: timerStatus});
 
+    get_timer_form()
+    
     chrome.storage.local.get(['work_time'],function(v){
         work_second = v.work_time * 60
         chrome.storage.local.set({work_second: work_second});
@@ -170,77 +163,156 @@ function reset() {
     })
 };
 
-function pomodoro_timer() {
-    chrome.storage.local.get([
-        'work_time',
-        'work_second',
-        'interval',
-        'interval_second',
-        'elapsed_time',
-        'one_roop_second',
-        'total_second'
-    ],function(v){
-        if (v.work_second == v.work_time * 60){
-            pomeWorkAlerm.play();
+//タイマーが稼働中(timerStatus = true)であれば、その経過時間を表示
+chrome.storage.local.get(['timerStatus','btnStatus'], function(v) {
+    console.log(v.timerStatus);
+    if(v.timerStatus == true){
+        timer_display();
+        if(v.btnStatus == "start"){
+            start();
+        }else if(v.btnStatus == "stop"){
+            stop();
         }
 
-        if (v.work_second == 0 && v.interval_second == v.interval * 60){
-            pomeIntervalAlerm.play();
-        }
+        startBtn.onclick = function() {
+            start();
+        };
         
-        if (v.work_second >= 0) {
-            count_down()
-            work_or_interval.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
-        }else if(v.interval_second > 0){
-            interval_count_down()
-            work_or_interval.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
-        }else if(v.interval_second == 0){
-            v.elapsed_time += v.one_roop_second;
-            chrome.storage.local.set({elapsed_time: v.elapsed_time});
-            if(v.elapsed_time < v.total_second){
-                v.work_second = v.work_time * 60;
-                v.interval_second = v.interval * 60;
-                chrome.storage.local.set({work_second: v.work_second});
-                chrome.storage.local.set({interval_second: v.interval_second});
-            }else{
+        stopBtn.onclick = function() {
+            stop();
+        };
+        
+        resetBtn.onclick = function() {
+            reset();
+        };
+    }
+});
+
+
+function popup_pomodoro_timer() {
+    // chrome.storage.local.get([
+    //     'work_time',
+    //     'work_second',
+    //     'interval',
+    //     'interval_second',
+    //     'elapsed_time',
+    //     'one_roop_second',
+    //     'total_second'
+    // ],function(v){
+    //     if (v.work_second == v.work_time * 60){
+    //         pomeWorkAlarm.play();
+    //     }
+
+    //     if (v.work_second == 0 && v.interval_second == v.interval * 60){
+    //         pomeIntervalAlarm.play();
+    //     }
+        
+    //     if (v.work_second >= 0) {
+    //         count_down()
+    //         work_or_interval.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
+    //     }else if(v.interval_second > 0){
+    //         interval_count_down()
+    //         work_or_interval.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
+    //     }else if(v.interval_second == 0){
+    //         v.elapsed_time += v.one_roop_second;
+    //         chrome.storage.local.set({elapsed_time: v.elapsed_time});
+    //         if(v.elapsed_time < v.total_second){
+    //             v.work_second = v.work_time * 60;
+    //             v.interval_second = v.interval * 60;
+    //             chrome.storage.local.set({work_second: v.work_second});
+    //             chrome.storage.local.set({interval_second: v.interval_second});
+    //         }else{
+    //             view_timer.innerHTML = "TIME UP!";
+    //             work_or_interval.innerHTML = "";
+    //             finishAlarm.play();
+    //             clearInterval(stopId);
+    //             chrome.storage.local.clear()
+    //         };
+    //     };
+    // })
+    // chrome.runtime.sendMessage({status: `${timerStatus}`});
+
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+        console.log(request.work_second)
+        if (request.work_second >= 0) {
+            popup_count_down()
+        }else if(request.interval_second > 0){
+            popup_interval_count_down()
+        }else if(request.interval_second == 0){
+            if(request.elapsed_time == request.total_second){
                 view_timer.innerHTML = "TIME UP!";
                 work_or_interval.innerHTML = "";
-                finishAlerm.play();
-                clearInterval(stopId);
                 chrome.storage.local.clear()
+                get_timer_form()
             };
         };
+
+        function popup_count_down() {
+            let min = Math.floor(request.work_second / 60);
+            let sec = request.work_second % 60;
+            work_or_interval.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
+            view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+            console.log(min)
+            console.log(sec)
+        }
+
+        function popup_interval_count_down() {
+            let min = Math.floor(request.interval_second / 60);
+            let sec = request.interval_second % 60;
+            work_or_interval.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
+            view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+        }
+
+        return true
     })
 };
 
 // 集中時間用カウントダウン
-function count_down() {
-    chrome.storage.local.get(['work_second'],function(v){
-        let min = Math.floor(v.work_second / 60);
-        let sec = v.work_second % 60;
-        v.work_second--;
-        chrome.storage.local.set({work_second: v.work_second});
-        view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-    })
-};
+// function popup_count_down() {
+//     // chrome.storage.local.get(['work_second'],function(v){
+//     //     let min = Math.floor(v.work_second / 60);
+//     //     let sec = v.work_second % 60;
+//     //     // v.work_second--;
+//     //     // chrome.storage.local.set({work_second: v.work_second});
+//     //     work_or_interval.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
+//     //     view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+//     // })
+
+//     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+//         let min = Math.floor(request.work_second / 60);
+//         let sec = request.work_second % 60;
+//         work_or_interval.innerHTML = "<div class='working pt-3'>集中タイム！</div>";
+//         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+
+//         return true
+//     })
+// };
 
 // インターバル用カウントダウン
-function interval_count_down() {
-    chrome.storage.local.get(['interval_second'],function(v){
-        let min = Math.floor(v.interval_second / 60);
-        let sec = v.interval_second % 60;
-        v.interval_second--;
-        chrome.storage.local.set({interval_second: v.interval_second});
-        view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
-    })
-};
+// function popup_interval_count_down() {
+    // chrome.storage.local.get(['interval_second'],function(v){
+    //     let min = Math.floor(v.interval_second / 60);
+    //     let sec = v.interval_second % 60;
+    //     v.interval_second--;
+    //     // chrome.storage.local.set({interval_second: v.interval_second});
+    //     work_or_interval.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
+    //     view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+    // })
+
+    // chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    //     let min = Math.floor(request.interval_second / 60);
+    //     let sec = request.interval_second % 60;
+    //     work_or_interval.innerHTML = "<div class='intervaling pt-3'>休憩タイム！</div>";
+    //     view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+
+    //     return true
+    // })
+// };
 
 pome_work_sound_test_btn.onclick = function() {
-    pomeWorkAlerm.play();
+    pomeWorkAlarm.play();
 }
 
 pome_interval_sound_test_btn.onclick = function() {
-    pomeIntervalAlerm.play();
+    pomeIntervalAlarm.play();
 }
-
-// chrome.storage.local.clear()

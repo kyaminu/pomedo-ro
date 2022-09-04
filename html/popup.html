@@ -8,7 +8,7 @@
         <script src="/js/bootstrap.js"></script>
     </head>
     <body>
-        <!-- タブ -->
+        <!-- タブ表示欄 -->
         <div class="navi">
             <div class="d-flex align-items-center">
                 <div class="tab tab-timer is-active px-2 py-4 bd-highlight d-flex flex-column align-items-center link-light">
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <!-- タイマーコンテンツ -->
+        <!-- タブ① タイマーコンテンツ -->
         <div class="content tab-timer is-show">
             <!-- タイマー作成ボタン -->
             <button class="add_timer_button d-flex mt-4 mb-2" data-bs-toggle="modal" data-bs-target="#modal" id="openModalBtn">
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <!-- キャラクターコンテンツ -->
+        <!-- タブ② キャラクターコンテンツ -->
         <div class="content tab-timer">
             <div class="d-flex">
                 <div class="index m-2">
@@ -121,14 +121,14 @@
             </div>
         </div>
 
-        <!-- その他コンテンツ -->
+        <!-- タブ③ その他コンテンツ -->
         <div class="content tab-timer">
             その他
         </div>
 
-        <audio src="/src/mp3/pome_work_alerm.mp3#t=0,2.5" id="pomeWorkAlerm"></audio>
-        <audio src="/src/mp3/pome_interval_alerm.mp3" id="pomeIntervalAlerm"></audio>
-        <audio src="/src/mp3/finish_alerm.mp3" id="finishAlerm"></audio>
+        <audio src="/src/mp3/pome_work_alarm.mp3#t=0,2.5" id="pomeWorkAlarm"></audio>
+        <audio src="/src/mp3/pome_interval_alarm.mp3" id="pomeIntervalAlarm"></audio>
+        <audio src="/src/mp3/finish_alarm.mp3" id="finishAlarm"></audio>
         <script src="/js/popup.js"></script>
     </body>
 </html>
