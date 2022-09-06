@@ -11,15 +11,9 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     }
 
     //switchがstopかresetの時
-    if(request.switch == "stop"){
+    if(request.switch == "stop" || request.switch == "reset"){
         clearInterval(stopId);
         stopId = null;
-    }
-
-    if(request.switch == "reset"){
-        clearInterval(stopId);
-        stopId = null;
-        // chrome.storage.local.clear()
     }
 
     return true
@@ -47,8 +41,6 @@ async function keepAlive() {
 
 //ポモドーロタイマー
 function pomodoro_timer() {
-    console.log("bgでのポモドロカウント確認用")
-
     chrome.storage.local.get([
         'work_time',
         'work_second',
@@ -73,7 +65,7 @@ function pomodoro_timer() {
                 chrome.storage.local.set({interval_second: v.interval_second});
             }else{
                 clearInterval(stopId);
-                // chrome.storage.local.clear()
+                chrome.storage.local.clear()
             };
         };
 
@@ -93,7 +85,6 @@ function pomodoro_timer() {
 function count_down() {
     chrome.storage.local.get(['work_second'],function(v){
         v.work_second--;
-        // chrome.runtime.sendMessage({work_second: `${v.work_second}`});
         chrome.storage.local.set({work_second: v.work_second});
     })
 };
@@ -102,7 +93,6 @@ function count_down() {
 function interval_count_down() {
     chrome.storage.local.get(['interval_second'],function(v){
         v.interval_second--;
-        // chrome.runtime.sendMessage({work_second: `${v.interval_second}`});
         chrome.storage.local.set({interval_second: v.interval_second});
     })
 };
