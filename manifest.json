@@ -3,15 +3,19 @@
     "description": "ポメがかまってちゃんするポモドーロタイマー",
     "version": "1.0",
     "manifest_version": 3,
-    "background": {
-        "service_worker": "background.js"
-},
+    "background": {"service_worker": "background.js"},
     "permissions": [
         "storage",
         "activeTab", 
         "scripting",
-        "background"
+        "background",
+        "tabs",
+        "alarms"
     ],
+    "web_accessible_resources": [{
+        "resources": ["src/*"],
+        "matches": ["<all_urls>"]
+    }],
     "action": {
         "default_popup": "html/popup.html",
         "default_icon": {
@@ -29,8 +33,6 @@
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": [
-            "js/content.js"
-        ]
+        "js": ["js/content.js"]
     }]
 }
