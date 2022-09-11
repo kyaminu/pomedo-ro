@@ -10,7 +10,7 @@ const pome_interval_sound_test_btn = document.getElementById("pome_interval_soun
 let view_timer = document.getElementById("view_timer");//実際に時間表示させる箇所
 let timerDetails = document.getElementById("timerDetails");//タイマー詳細
 let work_or_interval = document.getElementById("work_or_interval");//集中or休憩
-let timerStatus;//タイマーが活動中か否かで,経過時間を表示の有無を決める
+let timerStatus;//タイマーが活動中(true)か否(false)かで,経過時間を表示の有無を決める
 let btnStatus;//ボタンがstart・stopでpopupを再度開いた時の分岐点
 
 //音声
@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', function(){
         document.getElementsByClassName('content')[index].classList.add('is-show');
     };
 }, false);
+
+//form数値の反映
+chrome.storage.local.get(['repeat_time','work_time','interval'], function(v) {
+    document.getElementById('repeat_time_value').value = v.repeat_time
+    document.getElementById('work_time_value').value = v.work_time
+    document.getElementById('interval_value').value = v.interval
+})
 
 //「タイマーを設定する▷」を押した時
 makeTimerBtn.onclick = function() {
@@ -85,6 +92,7 @@ function get_timer_form(){
     let elapsed_time = 0; //秒数を入れる経過時間
     chrome.storage.local.set({elapsed_time: elapsed_time});
 }
+
 //タイマーを作成したら、タイマーとボタンを表示
 function timer_display(){
     chrome.storage.local.get(['repeat_time', 'work_time','interval','work_second'], function(v){

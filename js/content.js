@@ -29,3 +29,16 @@ document.querySelector("body").insertAdjacentHTML("afterbegin", pome_work_alarm_
 document.getElementById("imgPome").onclick = function(){
     document.getElementById("alarmPome").play()
 }
+
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    if(request.msg == "finish"){
+        // document.querySelector("body").insertAdjacentHTML("afterbegin", pome_hppy1_tag);
+        // document.querySelector("body").insertAdjacentHTML("afterbegin", pome_work_alarm_tag);
+
+        // document.getElementById("imgPome").onclick = function(){
+        //     document.getElementById("alarmPome").play()
+        // }
+        alert()
+    }
+    return true
+})

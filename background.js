@@ -1,4 +1,4 @@
-let lifeline;
+let lifeline
 let stopId
 
 //start・stop・resetボタン押された時の処理
@@ -66,6 +66,9 @@ function pomodoro_timer() {
             }else{
                 clearInterval(stopId);
                 chrome.storage.local.clear()
+                chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                    chrome.tabs.sendMessage(tabs[0].id, {msg: "finish"})
+                })
             };
         };
 
@@ -96,3 +99,26 @@ function interval_count_down() {
         chrome.storage.local.set({interval_second: v.interval_second});
     })
 };
+
+//count_down()かinterval_count_down()の判定
+// function check_timer(){
+//     if(count_down){
+//         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+//             chrome.tabs.sendMessage(tabs[0].id, {msg: "count"})
+//         })
+//     }else if(interval_count_down){
+//         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+//             chrome.tabs.sendMessage(tabs[0].id, {msg: "rest"})
+//         })
+//     }
+// }
+
+
+//全タブ相手に？
+// function send_content(){
+//     chrome.tabs.query({active: true, currentWindow: true},function(tabs){
+//         for (let tab of tabs) {
+//             chrome.tabs.sendMessage(tab.id, {msg: 'test'})
+//         }
+//     })
+// }
