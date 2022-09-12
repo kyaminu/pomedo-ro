@@ -188,9 +188,7 @@ function popup_pomodoro_timer() {
             popup_interval_count_down()
         }else if(request.interval_second == 0){
             if(request.elapsed_time == request.total_second){
-                view_timer.innerHTML = "TIME UP!";
-                work_or_interval.innerHTML = "";
-                get_timer_form()
+                reset()
             };
         };
 
