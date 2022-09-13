@@ -27,8 +27,8 @@ const finish_dialog_img = chrome.runtime.getURL('src/images/finish_dialog_img.pn
 const finish_dialog_style = `"width: 300px; height: 100px; border: none; border-radius: 10px; background-image: url(${finish_dialog_img}); background-size: 100% 100%;"`
 
 //dialog共通
-const div_style = `"text-align: center; font-size: 30px; font-weight: bold; padding-top: 10px;"`
-const ok_btn_style = `"padding: 3px 10px; margin-top: 10px; margin-left: 130px; background-color: #FFFFDD; border-color: #FFFFBB; border-radius: 10px;"`
+const div_style = `"color: black; text-align: center; font-size: 30px; font-weight: bold; padding-top: 10px;"`
+const ok_btn_style = `"color: black; padding: 3px 10px; margin-top: 10px; margin-left: 130px; background-color: #FFFFDD; border-color: #FFFFBB; border-radius: 10px;"`
 
 //htmlに挿入
 document.querySelector("body").insertAdjacentHTML("afterbegin", `<dialog id="finish_dialog" style=${finish_dialog_style}><div style=${div_style}}>TIME UP!</div><button id="ok_btn" style=${ok_btn_style}>OK</button></dialog>`);
