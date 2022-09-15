@@ -96,7 +96,12 @@ function pomodoro_timer() {
 
 // 集中時間用カウントダウン
 function count_down() {
-    chrome.storage.local.get(['work_second'],function(v){
+    chrome.storage.local.get(['work_second','constant_work_second'],function(v){
+        if(v.work_second == v.constant_work_second){
+            chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "count"})
+            })
+        }
         v.work_second--;
         chrome.storage.local.set({work_second: v.work_second});
     })
@@ -104,31 +109,13 @@ function count_down() {
 
 // インターバル用カウントダウン
 function interval_count_down() {
-    chrome.storage.local.get(['interval_second'],function(v){
+    chrome.storage.local.get(['interval_second','constant_interval_second'],function(v){
+        if(v.interval_second == v.constant_interval_second){
+            chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "rest"})
+            })
+        }
         v.interval_second--;
         chrome.storage.local.set({interval_second: v.interval_second});
     })
 };
-
-//count_down()かinterval_count_down()の判定
-// function check_timer(){
-//     if(count_down){
-//         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
-//             chrome.tabs.sendMessage(tabs[0].id, {msg: "count"})
-//         })
-//     }else if(interval_count_down){
-//         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
-//             chrome.tabs.sendMessage(tabs[0].id, {msg: "rest"})
-//         })
-//     }
-// }
-
-
-//全タブ相手に？
-// function send_content(){
-//     chrome.tabs.query({active: true, currentWindow: true},function(tabs){
-//         for (let tab of tabs) {
-//             chrome.tabs.sendMessage(tab.id, {msg: 'test'})
-//         }
-//     })
-// }

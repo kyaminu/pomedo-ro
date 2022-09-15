@@ -35,6 +35,22 @@ document.querySelector("body").insertAdjacentHTML("afterbegin", `<dialog id="fin
 const finish_dialog = document.getElementById("finish_dialog");
 
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    if(request.msg == "count"){
+        finish_dialog.showModal();
+        console.log("count")
+    }
+    return true
+})
+
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    if(request.msg == "rest"){
+        finish_dialog.showModal();
+        console.log("rest")
+    }
+    return true
+})
+
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     if(request.msg == "finish"){
         finish_dialog.showModal();
     }

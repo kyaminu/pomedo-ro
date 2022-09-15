@@ -79,9 +79,11 @@ function get_timer_form(){
 
     let work_second = work_time * 60; //ONタイムの秒換算
     chrome.storage.local.set({work_second: work_second});
+    chrome.storage.local.set({constant_work_second: work_second});//dialog用
 
     let interval_second = interval * 60; //OFFタイムの秒換算
     chrome.storage.local.set({interval_second: interval_second});
+    chrome.storage.local.set({constant_interval_second: interval_second});//dialog用
 
     let one_roop_second  =  work_second + interval_second; //１ループあたりの秒数
     chrome.storage.local.set({one_roop_second: one_roop_second});
