@@ -179,6 +179,8 @@ chrome.storage.local.get(['timerStatus','btnStatus'], function(v) {
         resetBtn.onclick = function() {
             reset();
         };
+    }else if(v.timerStatus == false){
+        chrome.runtime.sendMessage({switch: "reset"});
     }
 });
 

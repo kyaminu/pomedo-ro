@@ -99,7 +99,7 @@ function count_down() {
     chrome.storage.local.get(['work_second','constant_work_second'],function(v){
         if(v.work_second == v.constant_work_second){
             chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
-                chrome.tabs.sendMessage(tabs[0].id, {msg: "count"})
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "start"})
             })
         }
         v.work_second--;
@@ -112,7 +112,7 @@ function interval_count_down() {
     chrome.storage.local.get(['interval_second','constant_interval_second'],function(v){
         if(v.interval_second == v.constant_interval_second){
             chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
-                chrome.tabs.sendMessage(tabs[0].id, {msg: "rest"})
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "interval"})
             })
         }
         v.interval_second--;
