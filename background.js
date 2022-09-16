@@ -1,5 +1,12 @@
-let lifeline;
+let lifeline
 let stopId
+
+//初インストール時のフォームの初期値設定
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.local.set({repeat_time: 1});
+    chrome.storage.local.set({work_time: 25});
+    chrome.storage.local.set({interval: 5});
+})
 
 //start・stop・resetボタン押された時の処理
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
@@ -65,7 +72,13 @@ function pomodoro_timer() {
                 chrome.storage.local.set({interval_second: v.interval_second});
             }else{
                 clearInterval(stopId);
-                chrome.storage.local.clear()
+
+                timerStatus = false          
+                chrome.storage.local.set({timerStatus: timerStatus});
+                
+                chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                    chrome.tabs.sendMessage(tabs[0].id, {msg: "finish"})
+                })
             };
         };
 
@@ -83,7 +96,12 @@ function pomodoro_timer() {
 
 // 集中時間用カウントダウン
 function count_down() {
-    chrome.storage.local.get(['work_second'],function(v){
+    chrome.storage.local.get(['work_second','constant_work_second'],function(v){
+        if(v.work_second == v.constant_work_second){
+            chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "start"})
+            })
+        }
         v.work_second--;
         chrome.storage.local.set({work_second: v.work_second});
     })
@@ -91,7 +109,12 @@ function count_down() {
 
 // インターバル用カウントダウン
 function interval_count_down() {
-    chrome.storage.local.get(['interval_second'],function(v){
+    chrome.storage.local.get(['interval_second','constant_interval_second'],function(v){
+        if(v.interval_second == v.constant_interval_second){
+            chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, {msg: "interval"})
+            })
+        }
         v.interval_second--;
         chrome.storage.local.set({interval_second: v.interval_second});
     })

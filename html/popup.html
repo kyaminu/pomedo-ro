@@ -66,19 +66,19 @@
                             <form class="row" name="timerForm">
                                 <div class="col-6 mb-3">
                                     <label class="form-label">繰り返し(回)</label>
-                                    <input type="number" class="form-control" name="repeat_time" value="1" min="0" max="10" required>
+                                    <input type="number" class="form-control" name="repeat_time" min="1" max="10" placeholder="1" id="repeat_time_value" required>
                                 </div>
 
                                 <div class="col-6 mb-3"></div>
 
                                 <div class="col-6 mb-3">
                                     <label class="form-label">集中時間(分)</label>
-                                    <input type="number"class="form-control" name="work_time" value="25" min="1" max="55" required>
+                                    <input type="number" class="form-control" name="work_time" min="1" max="55" placeholder="25" id="work_time_value" required>
                                 </div>
 
                                 <div class="col-6 mb-3">
                                     <label class="form-label">休憩時間(分)</label>
-                                    <input type="number" class="form-control" name="interval" value="5" min="1" max="15" required>
+                                    <input type="number" class="form-control" name="interval" min="1" max="15" placeholder="5" id="interval_value" required>
                                 </div>
 
                                 <div class="col-8 mb-3">
@@ -89,7 +89,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button class="make_timer_btn" type="button" id="makeTimerBtn" data-bs-dismiss="modal">設定</button>
+                                    <input class="make_timer_btn" type="button" id="makeTimerBtn" data-bs-dismiss="modal" value="設定" required></input>
                                 </div>
                             </form>
                         </div>
