@@ -140,6 +140,10 @@ function stop() {
 function reset() {
     chrome.runtime.sendMessage({switch: "reset"});
 
+    chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
+        chrome.tabs.sendMessage(tabs[0].id, {msg: "reset"})
+    })
+
     openModalBtn.removeAttribute("disabled")
     work_or_interval.innerHTML = "";
 
