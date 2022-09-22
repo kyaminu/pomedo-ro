@@ -9,10 +9,6 @@ body {
     width: 100%;
 }
 
-a {
-    text-decoration:none;
-}
-
 .navi {
     background-color: cadetblue;
 }
@@ -154,4 +150,21 @@ a {
     border-radius:30px;
     background-color: rgb(224, 137, 23);
     margin: 0 0 0 auto;
+}
+
+/* その他タブ */
+.webstore{
+    text-decoration: none;
+    color: black;
+    display: block
+}
+
+.webstore{
+    cursor:pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.webstore:hover{
+    color: black;
+    background-color: #e2dadc;
 }
