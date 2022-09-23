@@ -6,11 +6,10 @@
     "background": {"service_worker": "background.js"},
     "permissions": [
         "storage",
+        "tabs",
         "activeTab", 
         "scripting",
-        "background",
-        "tabs",
-        "alarms"
+        "background"
     ],
     "web_accessible_resources": [{
         "resources": ["src/*"],
