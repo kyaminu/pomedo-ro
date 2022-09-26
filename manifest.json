@@ -8,7 +8,6 @@
         "storage",
         "tabs",
         "activeTab", 
-        "scripting",
         "background"
     ],
     "web_accessible_resources": [{
