@@ -23,5 +23,5 @@
 それだったら可愛くしてやろうと思いました。
 
 # イメージ図
-![readme 1](https://gyazo.com/483e86fe585a5679b9e6e25b288a2e61)
-![readme 2](https://gyazo.com/172790c9c2e171efa148c547b68fe141)
+<a href="https://gyazo.com/483e86fe585a5679b9e6e25b288a2e61"><img src="https://i.gyazo.com/483e86fe585a5679b9e6e25b288a2e61.png" alt="Image from Gyazo" width="390"/></a>
+<a href="https://gyazo.com/172790c9c2e171efa148c547b68fe141"><img src="https://i.gyazo.com/172790c9c2e171efa148c547b68fe141.png" alt="Image from Gyazo" width="394"/></a>
