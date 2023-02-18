@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     await keepAlive();
 
     //switchがonの時 かつ stopIdがnullの時
-    if(request.switch == "on" && stopId == null){
+    if(request.switch == "start" && stopId == null){
         stopId = setInterval(pomodoro_timer, 1000);
     }
 
