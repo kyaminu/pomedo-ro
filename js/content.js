@@ -46,21 +46,21 @@ document.querySelector("body").insertAdjacentHTML("afterbegin", finish_alarm_tag
 // dialogをhtmlに挿入
 document.querySelector("body").insertAdjacentHTML("afterbegin", 
     `<dialog id="start_dialog" style=${start_dialog_style}>
-        <div style=${dialog_text_style}}>START!</div>
+        <div id="close_dialog" style=${dialog_text_style}}>START!</div>
         <button id="start_ok_btn" style=${ok_btn_style}>OK</button>
     </dialog>`
 );
 
 document.querySelector("body").insertAdjacentHTML("afterbegin",
     `<dialog id="interval_dialog" style=${interval_dialog_style}>
-        <div style=${dialog_text_style}}>Refresh time!</div>
+        <div id="close_dialog" style=${dialog_text_style}}>Refresh time!</div>
         <button id="interval_ok_btn" style=${ok_btn_style}>OK</button>
     </dialog>`
 );
 
 document.querySelector("body").insertAdjacentHTML("afterbegin", 
     `<dialog id="finish_dialog" style=${finish_dialog_style}>
-        <div style=${dialog_text_style}}>TIME UP!</div>
+        <div id="close_dialog" style=${dialog_text_style}}>TIME UP!</div>
         <button id="finish_ok_btn" style=${ok_btn_style}>OK</button>
     </dialog>`
 );
@@ -88,11 +88,6 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     return true
 })
 
-//スタートdialogの閉じるボタン
-document.getElementById('start_ok_btn').onclick = function(){
-    start_dialog.close()
-}
-
 //休憩のdialog表示
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     if(request.msg == "interval"){
@@ -105,11 +100,6 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     return true
 })
 
-//休憩のdialogの閉じるボタン
-document.getElementById('interval_ok_btn').onclick = function(){
-    interval_dialog.close()
-}
-
 //フィニッシュのdialog表示
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     if(request.msg == "finish"){
@@ -121,10 +111,38 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     return true
 })
 
-//フィニッシュのdialogの閉じるボタン
+//各dialogの閉じるボタン
+document.getElementById('start_ok_btn').onclick = function(){
+    start_dialog.close()
+}
+
+document.getElementById('interval_ok_btn').onclick = function(){
+    interval_dialog.close()
+}
+
 document.getElementById('finish_ok_btn').onclick = function(){
     finish_dialog.close()
 }
+
+//ダイアログの外側クリックで閉じる処理 
+// https://zenn.dev/de_teiu_tkg/articles/96a46374655e56
+start_dialog.addEventListener('click', (event) => {
+    if(event.target.closest('#close_dialog') === null) {
+        start_dialog.close()
+    }
+});
+
+interval_dialog.addEventListener('click', (event) => {
+    if(event.target.closest('#close_dialog') === null) {
+        interval_dialog.close()
+    }
+});
+
+finish_dialog.addEventListener('click', (event) => {
+    if(event.target.closest('#close_dialog') === null) {
+        finish_dialog.close()
+    }
+});
 
 //リセットボタン押したらキャラが消える
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
