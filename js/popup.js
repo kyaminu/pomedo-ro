@@ -47,7 +47,7 @@ chrome.storage.local.get(['repeat_time','work_time','interval'], function(v) {
 
 //「タイマーを設定する▷」を押した時
 makeTimerBtn.onclick = function() {
-    get_timer_form();
+    get_time_from_form();
 
     //タイマーを作成したら、タイマーとボタンを表示
     timer_display();
@@ -67,7 +67,7 @@ makeTimerBtn.onclick = function() {
 };
 
 //フォームから時間内容を取得
-function get_timer_form(){
+function get_time_from_form(){
     let repeat_time = parseInt(document.forms.timerForm.repeat_time.value, 10);//くり返し回数
     chrome.storage.local.set({repeat_time: repeat_time});
 
@@ -98,7 +98,7 @@ function get_timer_form(){
 //タイマーを作成したら、タイマーとボタンを表示
 function timer_display(){
     chrome.storage.local.get(['repeat_time', 'work_time','interval','work_second'], function(v){
-        let min = Math.floor(v.work_second / 60);
+        let min = v.work_time
         let sec = v.work_second % 60;
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
 
@@ -117,9 +117,9 @@ function timer_display(){
 }
 
 function start() {
-    chrome.runtime.sendMessage({switch: "on"});
+    chrome.runtime.sendMessage({switch: "start"});
 
-    openModalBtn.setAttribute("disabled", true);
+    openModalBtn.setAttribute("disabled", true);//「タイマーを設定する▷」を押せなくする
 
     timerStatus = true
     chrome.storage.local.set({timerStatus: timerStatus});
@@ -139,19 +139,21 @@ function stop() {
 
 function reset() {
     chrome.runtime.sendMessage({switch: "reset"});
-
+    
+    //content.jsへ
     chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {msg: "reset"})
     })
 
-    openModalBtn.removeAttribute("disabled")
+    openModalBtn.removeAttribute("disabled")//「タイマーを設定する▷」を押せるようにする
     work_or_interval.innerHTML = "";
 
     timerStatus = false          
     chrome.storage.local.set({timerStatus: timerStatus});
 
-    get_timer_form()
+    get_time_from_form()//フォームから時間内容を再取得
     
+    //ローカルストレージの中身もリセットする
     chrome.storage.local.get(['work_time'],function(v){
         work_second = v.work_time * 60
         chrome.storage.local.set({work_second: work_second});
@@ -189,15 +191,14 @@ chrome.storage.local.get(['timerStatus','btnStatus'], function(v) {
 });
 
 function popup_pomodoro_timer() {
+    //bgから受け取っている
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         if (request.work_second >= 0) {
             popup_count_down()
         }else if(request.interval_second > 0){
             popup_interval_count_down()
-        }else if(request.interval_second == 0){
-            if(request.elapsed_time == request.total_second){
-                reset()
-            };
+        }else if(request.interval_second == 0 && request.elapsed_time == request.total_second){
+            reset()
         };
 
         function popup_count_down() {

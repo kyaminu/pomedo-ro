@@ -1,5 +1,5 @@
 let lifeline
-let stopId
+let timerId
 
 //初インストール時のフォームの初期値設定
 chrome.runtime.onInstalled.addListener(() => {
@@ -12,21 +12,22 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     await keepAlive();
 
-    //switchがonの時 かつ stopIdがnullの時
-    if(request.switch == "on" && stopId == null){
-        stopId = setInterval(pomodoro_timer, 1000);
+    //switchがonの時 かつ timerIdがnullの時
+    if(request.switch == "start" && timerId == null){
+        timerId = setInterval(pomodoro_timer, 1000);
     }
 
     //switchがstopかresetの時
     if(request.switch == "stop" || request.switch == "reset"){
-        clearInterval(stopId);
-        stopId = null;
+        clearInterval(timerId);
+        timerId = null;
     }
 
     return true
 })
 
-//5分間の再接続処理
+//5分間の再接続処理 
+//https://stackoverflow.com/questions/66618136/persistent-service-worker-in-chrome-extension/66618269#66618269
 chrome.runtime.onConnect.addListener(port => {
     if (port.name === 'keepAlive') {
         lifeline = port;
@@ -36,7 +37,9 @@ chrome.runtime.onConnect.addListener(port => {
 });
 
 function keepAliveForced() {
-    lifeline?.disconnect();
+    //オプショナルチェーン(?.) 
+    // https://typescriptbook.jp/reference/values-types-variables/object/optional-chaining
+    lifeline?.disconnect(); 
     lifeline = null;
     keepAlive();
 }
@@ -71,7 +74,7 @@ function pomodoro_timer() {
                 chrome.storage.local.set({work_second: v.work_second});
                 chrome.storage.local.set({interval_second: v.interval_second});
             }else{
-                clearInterval(stopId);
+                clearInterval(timerId);
 
                 timerStatus = false          
                 chrome.storage.local.set({timerStatus: timerStatus});
