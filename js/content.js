@@ -28,8 +28,7 @@ const finish_alarm_tag = `<audio src="${finish_alarm_url}" id="finish_alarm"></a
 
 
 //dialogの共通css
-const dialog_style = `width: 300px; height: 110px; border: none; border-radius: 10px; background-size: 100% 100%; position: fixed; inset: 0;
-margin:auto;`
+const dialog_style = `width: 300px; height: 110px; border: none; border-radius: 10px; background-size: 100% 100%; position: fixed; inset: 0; margin:auto; display: none;`
 const dialog_text_style = `"color: black; text-align: center; font-size: 30px; font-weight: bold; padding-top: 10px; color: #330000; text-shadow: 1.5px 1.5px 0 #778899; -webkit-text-stroke: 1px #888; text-stroke: 1px #888;"`
 const ok_btn_style = `"color: black; padding: 3px 10px; margin-top: 10px; margin-left: 130px; background-color: #FFFFDD; border-color: #FFFFBB; border-radius: 10px;"`
 
@@ -75,12 +74,14 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     if(request.msg == "start"){
         if(interval_dialog.showModal){
             interval_dialog.close()
+            interval_dialog.style.display = "none";
         }
 
         if(document.getElementById("pome_happy_img")){
             document.getElementById("pome_happy_img").remove();
         }
 
+        start_dialog.style.display = "block";
         start_dialog.showModal();
         document.getElementById("pome_work_alarm").play()
         document.querySelector("body").insertAdjacentHTML("afterbegin", pome_angry_tag);
@@ -92,6 +93,8 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     if(request.msg == "interval"){
         start_dialog.close()
+        start_dialog.style.display = "none";
+        interval_dialog.style.display = "block";
         interval_dialog.showModal();
         document.getElementById("pome_interval_alarm").play()
         document.getElementById("pome_angry_img").remove();
@@ -104,6 +107,8 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     if(request.msg == "finish"){
         interval_dialog.close()
+        interval_dialog.style.display = "none";
+        finish_dialog.style.display = "block";
         finish_dialog.showModal();
         document.getElementById("finish_alarm").play()
         document.getElementById("pome_happy_img").remove();
@@ -114,14 +119,17 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 //各dialogの閉じるボタン
 document.getElementById('start_ok_btn').onclick = function(){
     start_dialog.close()
+    start_dialog.style.display = "none";
 }
 
 document.getElementById('interval_ok_btn').onclick = function(){
     interval_dialog.close()
+    interval_dialog.style.display = "none";
 }
 
 document.getElementById('finish_ok_btn').onclick = function(){
     finish_dialog.close()
+    finish_dialog.style.display = "none";
 }
 
 //ダイアログの外側クリックで閉じる処理 
@@ -129,18 +137,21 @@ document.getElementById('finish_ok_btn').onclick = function(){
 start_dialog.addEventListener('click', (event) => {
     if(event.target.closest('#close_dialog') === null) {
         start_dialog.close()
+        start_dialog.style.display = "none";
     }
 });
 
 interval_dialog.addEventListener('click', (event) => {
     if(event.target.closest('#close_dialog') === null) {
         interval_dialog.close()
+        interval_dialog.style.display = "none";
     }
 });
 
 finish_dialog.addEventListener('click', (event) => {
     if(event.target.closest('#close_dialog') === null) {
         finish_dialog.close()
+        finish_dialog.style.display = "none";
     }
 });
 
