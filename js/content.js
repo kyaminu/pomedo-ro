@@ -13,7 +13,7 @@ const pome_interval_alarm_url = chrome.runtime.getURL('src/mp3/pome_interval_ala
 const finish_alarm_url = chrome.runtime.getURL('src/mp3/finish_alarm.mp3');
 
 //HTML画像タグ
-const pome_hppy_tag = `<img src="${pome_happy_url}" id="pome_happy_img" >`;
+const pome_hppy_tag = `<img src="${pome_happy_url}" id="pome_happy_img">`;
 const pome_angry_tag = `<img src="${pome_angry_url}" id="pome_angry_img">`;
 
 //キャラのcssを挿入
