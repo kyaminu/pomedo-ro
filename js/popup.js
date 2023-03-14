@@ -45,7 +45,7 @@ chrome.storage.local.get(['repeat_time','work_time','interval'], function(v) {
     document.getElementById('interval_value').value = v.interval
 })
 
-//「タイマーを設定する▷」を押した時
+//「モーダルの設定ボタン」を押した時
 makeTimerBtn.onclick = function() {
     get_time_from_form();
 
@@ -117,7 +117,7 @@ function timer_display(){
 }
 
 function start() {
-    chrome.runtime.sendMessage({switch: "start"});
+    chrome.runtime.sendMessage({switch: "start"});//bgへ
 
     openModalBtn.setAttribute("disabled", true);//「タイマーを設定する▷」を押せなくする
 
@@ -131,14 +131,14 @@ function start() {
 };
 
 function stop() {
-    chrome.runtime.sendMessage({switch: "stop"});
+    chrome.runtime.sendMessage({switch: "stop"});//bgへ
 
     btnStatus = "stop"
     chrome.storage.local.set({btnStatus: btnStatus});
 };
 
 function reset() {
-    chrome.runtime.sendMessage({switch: "reset"});
+    chrome.runtime.sendMessage({switch: "reset"});//bgへ
     
     //content.jsへ
     chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){

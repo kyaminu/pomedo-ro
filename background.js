@@ -8,6 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.set({interval: 5});
 })
 
+//popupから
 //start・stop・resetボタン押された時の処理
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
     await keepAlive();
@@ -79,6 +80,7 @@ function pomodoro_timer() {
                 timerStatus = false          
                 chrome.storage.local.set({timerStatus: timerStatus});
                 
+                //content.jsへ
                 chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
                     chrome.tabs.sendMessage(tabs[0].id, {msg: "finish"})
                 })
@@ -100,6 +102,7 @@ function pomodoro_timer() {
 // 集中時間用カウントダウン
 function count_down() {
     chrome.storage.local.get(['work_second','constant_work_second'],function(v){
+        //content.jsへ
         if(v.work_second == v.constant_work_second){
             chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
                 chrome.tabs.sendMessage(tabs[0].id, {msg: "start"})
@@ -113,6 +116,7 @@ function count_down() {
 // インターバル用カウントダウン
 function interval_count_down() {
     chrome.storage.local.get(['interval_second','constant_interval_second'],function(v){
+        //content.jsへ
         if(v.interval_second == v.constant_interval_second){
             chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
                 chrome.tabs.sendMessage(tabs[0].id, {msg: "interval"})

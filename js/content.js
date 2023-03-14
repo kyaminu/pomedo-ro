@@ -71,6 +71,7 @@ const finish_dialog = document.getElementById("finish_dialog");
 
 //スタートdialog表示
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    //bgから
     if(request.msg == "start"){
         if(interval_dialog.showModal){
             interval_dialog.close()
@@ -91,6 +92,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 
 //休憩のdialog表示
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    //bgから
     if(request.msg == "interval"){
         start_dialog.close()
         start_dialog.style.display = "none";
@@ -105,6 +107,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 
 //フィニッシュのdialog表示
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    //bgから
     if(request.msg == "finish"){
         interval_dialog.close()
         interval_dialog.style.display = "none";
@@ -157,6 +160,7 @@ finish_dialog.addEventListener('click', (event) => {
 
 //リセットボタン押したらキャラが消える
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse){
+    //popupから
     if(request.msg == "reset"){
         if(document.getElementById("pome_angry_img")){
             document.getElementById("pome_angry_img").remove();
