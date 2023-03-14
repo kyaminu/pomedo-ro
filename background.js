@@ -45,7 +45,6 @@ function keepAliveForced() {
 }
 
 async function keepAlive() {
-    if (lifeline) return;
     chrome.runtime.connect({ name: 'keepAlive' })
 }
 
