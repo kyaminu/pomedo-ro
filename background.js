@@ -33,7 +33,6 @@ chrome.runtime.onConnect.addListener(port => {
     if (port.name === 'keepAlive') {
         lifeline = port;
         setTimeout(keepAliveForced, 295e3); //4分55秒
-        port.onDisconnect.addListener(keepAliveForced);
     }
 });
 
