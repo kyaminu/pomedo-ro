@@ -1,7 +1,7 @@
 {
     "name": "ポメドーロ",
     "description": "ポメがかまってちゃんするポモドーロタイマー",
-    "version": "2.0",
+    "version": "2.1",
     "manifest_version": 3,
     "background": {"service_worker": "background.js"},
     "permissions": [
