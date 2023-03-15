@@ -98,7 +98,7 @@ function get_time_from_form(){
 //タイマーを作成したら、タイマーとボタンを表示
 function timer_display(){
     chrome.storage.local.get(['repeat_time', 'work_time','interval','work_second'], function(v){
-        let min = v.work_time
+        let min = Math.floor(v.work_second / 60);
         let sec = v.work_second % 60;
         view_timer.innerHTML = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
 
