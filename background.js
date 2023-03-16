@@ -31,14 +31,14 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 //https://stackoverflow.com/questions/66618136/persistent-service-worker-in-chrome-extension/66618269#66618269
 chrome.runtime.onConnect.addListener(port => {
     if (port.name === 'keepAlive') {
-        lifeline = port;
+        // lifeline = port;
         setTimeout(keepAliveForced, 295e3); //4分55秒
     }
 });
 
 function keepAliveForced() {
     //オプショナルチェーン(?.) 
-    // https://typescriptbook.jp/reference/values-types-variables/object/optional-chaining
+    // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Optional_chaining
     lifeline?.disconnect(); 
     lifeline = null;
     keepAlive();
